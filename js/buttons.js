@@ -2079,6 +2079,7 @@ export default class Buttons {
     }
 
     supportsWebGL() {
+        return false;
         const gl = document.createElement('canvas').getContext('webgl2');
         if (!gl) return false;
         else return true;
