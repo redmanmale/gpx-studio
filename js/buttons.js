@@ -1,6 +1,5 @@
 import Total from './total.js';
 import Slider from './slider.js';
-import Google from './google.js';
 
 export default class Buttons {
     constructor() {
@@ -985,10 +984,6 @@ export default class Buttons {
             buttons.input.click();
             buttons.load_window.hide();
         });
-        this.load_drive.addEventListener("click", function () {
-            buttons.google.loadPicker(false);
-            buttons.load_window.hide();
-        });
         this.load_error_ok.addEventListener("click", function () {
             buttons.load_error_window.hide();
         });
@@ -1279,10 +1274,6 @@ export default class Buttons {
             }
 
             buttons.export_window.hide();
-        });
-        this.save_drive.addEventListener("click", function () {
-            buttons.export_window.hide();
-            buttons.google.loadPicker(true);
         });
         this.validate.addEventListener("click", function () {
             if (total.hasFocus) return;
@@ -2142,7 +2133,7 @@ export default class Buttons {
                 buttons.elevation_input.children[0].classList.add('fa-chart-area');
             }
         });
-        this.google = new Google(this);
+        buttons.elevation_input.click();
     }
 
     focusTabElement(tab) {
