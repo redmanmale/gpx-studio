@@ -68,10 +68,7 @@ export default class Buttons {
         this.clear2 = document.getElementById("clear2");
         this.cancel_clear = document.getElementById("cancelclear");
         this.help = document.getElementById("help");
-        this.about = document.getElementById("about");
         this.account = document.getElementById("account");
-        this.donate = document.getElementById("donate");
-        this.donate2 = document.getElementById("donate-2");
         this.delete = document.getElementById("delete");
         this.delete2 = document.getElementById("delete2");
         this.zone_delete = document.getElementById("zone-delete");
@@ -995,12 +992,6 @@ export default class Buttons {
         this.load_error_ok.addEventListener("click", function () {
             buttons.load_error_window.hide();
         });
-        this.donate.addEventListener("click", function () {
-            buttons.donation();
-        });
-        this.donate2.addEventListener("click", function () {
-            buttons.donation();
-        });
         this.toolbar_content.addEventListener("click", function () {
             if (window.getComputedStyle(buttons.load).display == 'none') {
                 buttons.toolbar_content.classList.add('maximized');
@@ -1839,9 +1830,6 @@ export default class Buttons {
 
             buttons.controlLayers._layer_selection_button.click();
         });
-        this.about.addEventListener("click", function () {
-            window.open('./about.html');
-        });
         this.help.addEventListener("click", function () {
             if (buttons.window_open) buttons.window_open.hide();
             buttons.window_open = buttons.help_window;
@@ -2266,10 +2254,6 @@ export default class Buttons {
         if (this.window_open) this.window_open.hide();
         this.window_open = this.load_error_window;
         this.load_error_window.show();
-    }
-
-    donation() {
-        window.open('https://ko-fi.com/gpxstudio');
     }
 
     pause(msec) {
