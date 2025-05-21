@@ -54,7 +54,6 @@
     <body>
         <input id="input-file" type="file" accept=".gpx" multiple style="display: none"/>
         <div id="mapid"></div>
-        <div id="mly"><div id="mly-controls"><i id="mly-move" class="fas fa-arrows-alt custom-button"></i><i id="mly-close" class="fas fa-times custom-button"></i></div></div>
         <div style="display: none">
         <div id="toolbar" class="panels-container center-leaflet">
             <div id="burger-logo">
@@ -159,13 +158,6 @@
                     </tr>
                 </table>
             </div>
-        </div>
-        <div id="street-view-content">
-            <div id="street-view-selector">
-                <input id="street-view-provider-google" type="radio" name="street-view-provider" value="google"> <label for="street-view-provider-google">Google</label>
-                <input id="street-view-provider-mapillary" type="radio" name="street-view-provider" value="mapillary" checked> <label for="street-view-provider-mapillary">Mapillary</label>
-            </div>
-            <i id="street-view" class="fas fa-street-view custom-button" style="padding: 6px; font-size: 14px;" title="Open Mapillary or Google Street View"></i>
         </div>
         <label id="chevrons" class="dontselect"><input type="checkbox" id="show-chevrons" class="custom-button" style="vertical-align: middle;"> Direction markers</label>
         <label id="dist-markers" class="dontselect"><input type="checkbox" id="show-dist-markers" class="custom-button" style="vertical-align: middle;"> Distance markers</label>
@@ -489,7 +481,6 @@
         <div id="cancel-button-text">Cancel</div>
         <div id="search-input-text">Search...</div>
         <div id="search-button-text">Search for a place or paste GPS coordinates</div>
-        <div id="locate-button-text">Show my position</div>
         <div id="add-poi-text">Add POI to current trace</div>
         <span id="track-text">Track</span>
         <span id="segment-text">Segment</span>

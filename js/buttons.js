@@ -41,18 +41,7 @@ export default class Buttons {
             toggleableAttributionControl: false,
             zoomSnap: 0.5,
             zoomDelta: 0.5,
-        }).setView([0, 0], 2);
-
-        if (!this.embedding && !urlParams.has('state') && !localStorage.hasOwnProperty('traces')) {
-            var locationFound = false;
-            this.map.addEventListener("locationfound", function (e) {
-                if (!locationFound) {
-                    e.target.setView(e.latlng, 12);
-                    locationFound = true;
-                }
-            });
-            this.map.locate({ setView: true, maximumAge: 100000 });
-        }
+        }).setView([55.725045, 37.646961], 9);
 
         // BUTTONS
         this.input = document.getElementById("input-file");
@@ -207,13 +196,6 @@ export default class Buttons {
         this.embed_content = document.getElementById('embed-content');
         this.trace_info_content = document.getElementById('info');
         this.toolbar_content = document.getElementById('toolbar');
-        this.street_view_content = document.getElementById('street-view-content');
-        this.street_view_button = document.getElementById('street-view');
-        this.street_view_google = document.getElementById('street-view-provider-google');
-        this.street_view_mapillary = document.getElementById('street-view-provider-mapillary');
-        this.mapillary_container = document.getElementById('mly');
-        this.mapillary_move = document.getElementById('mly-move');
-        this.mapillary_close = document.getElementById('mly-close');
 
         // TRANSLATED TEXT
         this.ok_button_text = document.getElementById('ok-button-text').textContent;
@@ -240,7 +222,6 @@ export default class Buttons {
         this.symbol_text = document.getElementById('symbol-text').textContent;
         this.search_input_text = document.getElementById('search-input-text').textContent;
         this.search_button_text = document.getElementById('search-button-text').textContent;
-        this.locate_button_text = document.getElementById('locate-button-text').textContent;
         this.empty_title_text = document.getElementById('empty-title-text').textContent;
         this.basemaps_text = document.getElementById('basemaps-text').textContent;
         this.overlays_text = document.getElementById('overlays-text').textContent;
@@ -474,27 +455,6 @@ export default class Buttons {
                         _this.map.fitBounds(bbox);
                     }).addTo(_this.map);
                     _this.geocoderControl.getContainer().children[0].title = _this.search_button_text;
-
-                    L.control.locate({
-                        position: 'topright',
-                        icon: 'fas fa-crosshairs',
-                        iconLoading: 'fas fa-spinner spinner',
-                        setView: 'always',
-                        keepCurrentZoomLevel: true,
-                        showPopup: false,
-                        strings: { title: _this.locate_button_text }
-                    }).addTo(_this.map);
-
-                    _this.streetView = L.control({
-                        position: 'topright'
-                    });
-                    _this.streetView.onAdd = function (map) {
-                        var div = L.DomUtil.create('div', 'leaflet-control-street-view leaflet-control-layers leaflet-bar');
-                        div.appendChild(_this.street_view_content);
-                        L.DomEvent.disableClickPropagation(div);
-                        return div;
-                    };
-                    _this.streetView.addTo(_this.map);
 
                     layers.stravaHeatmapAll.on('tileerror', function () {
                         _this.updateStravaCookies();
@@ -1894,155 +1854,7 @@ export default class Buttons {
                     });
                 }
             });
-            this.street_view_button.mapillary = true;
-            this.street_view_mapillary.addEventListener('change', function () {
-                var switchProvider = buttons.street_view_button.open;
-                if (switchProvider) buttons.street_view_button.click();
-                buttons.street_view_button.mapillary = true;
-                if (switchProvider) buttons.street_view_button.click();
-            });
-            this.street_view_google.addEventListener('change', function () {
-                var switchProvider = buttons.street_view_button.open;
-                if (switchProvider) buttons.street_view_button.click();
-                buttons.street_view_button.mapillary = false;
-                if (switchProvider) buttons.street_view_button.click();
-            });
-            const openStreetView = function (e) {
-                if (buttons.street_view_button.mapillary) {
-                    if (!buttons.mapillary) {
-                        var { Viewer } = mapillary;
-                        buttons.mapillary = new Viewer({
-                            accessToken: 'MLY|4381405525255083|3204871ec181638c3c31320490f03011',
-                            container: buttons.mapillary_container,
-                            component: { cover: false }
-                        });
-
-                        buttons.mapillary.on('position', async (event) => {
-                            if (buttons.street_view_button.open) {
-                                const ll = await buttons.mapillary.getPosition();
-
-                                if (!buttons.mapillary.marker) {
-                                    buttons.mapillary.marker = L.circleMarker(ll, {
-                                        className: 'position-marker',
-                                        radius: 8
-                                    });
-                                    buttons.mapillary.marker.addTo(buttons.map);
-                                } else {
-                                    buttons.mapillary.marker.setLatLng(ll);
-                                }
-
-                                buttons.map.setView(ll);
-                            }
-                        });
-                    }
-
-                    var url = 'https://graph.mapillary.com/images?access_token=MLY|4381405525255083|3204871ec181638c3c31320490f03011&bbox=';
-                    url += e.latlng.toBounds(50).toBBoxString();
-
-                    var Http = new XMLHttpRequest();
-                    Http.open("GET", url);
-                    Http.send();
-                    Http.onreadystatechange = function () {
-                        if (Http.readyState == 4 && Http.status == 200) {
-                            var ans = JSON.parse(this.responseText);
-                            if (ans.data) {
-                                var dist = Infinity, imageId = null, ll = null;
-                                for (var i = 0; i < ans.data.length; i++) {
-                                    const imgLatlng = L.latLng([ans.data[i].geometry.coordinates[1], ans.data[i].geometry.coordinates[0]]);
-                                    if (imageId == null || e.latlng.distanceTo(imgLatlng) < dist) {
-                                        imageId = ans.data[i].id;
-                                        dist = e.latlng.distanceTo(imgLatlng);
-                                        ll = imgLatlng;
-                                    }
-                                }
-                                if (imageId != null) {
-                                    buttons.mapillary.moveTo(imageId).then(function () {
-                                        buttons.mapillary.resize();
-                                    });
-
-                                    if (!buttons.mapillary.marker) {
-                                        buttons.mapillary.marker = L.circleMarker(ll, {
-                                            className: 'position-marker',
-                                            radius: 8
-                                        });
-                                        buttons.mapillary.marker.addTo(buttons.map);
-                                    } else {
-                                        buttons.mapillary.marker.setLatLng(ll);
-                                    }
-
-                                    buttons.map.setView(ll);
-                                    buttons.mapillary_container.style.display = 'block';
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    window.open('https://maps.google.com/maps?q=&layer=c&cbll=' + e.latlng.lat + ',' + e.latlng.lng + '&cbp=11,0,0,0,0');
-                }
-            };
-            const closeStreetView = function (e) {
-                buttons.mapillary_container.style.display = 'none';
-                if (buttons.mapillary) {
-                    if (buttons.mapillary.marker) {
-                        buttons.mapillary.marker.remove();
-                        buttons.mapillary.marker = null;
-                    }
-                    const sequenceComponent = buttons.mapillary.getComponent('sequence');
-                    sequenceComponent.stop();
-                }
-            };
-            this.street_view_button.addEventListener('click', function () {
-                if (buttons.street_view_button.open) {
-                    if (total.hasFocus || !total.traces[total.focusOn].isEdited) {
-                        map._container.style.cursor = '';
-                        if (buttons.mapboxgl_canvas) buttons.mapboxgl_canvas.style.cursor = '';
-                    }
-                    buttons.disable_trace = false;
-                    buttons.street_view_button.style.color = '';
-                    if (buttons.street_view_button.mapillary) {
-                        closeStreetView();
-                        buttons.mapillary_coverage.remove();
-                        buttons.mapillary_coverageZoomed.remove();
-                    }
-                    buttons.street_view_button.open = false;
-                } else {
-                    if (!buttons.mapboxMap.getMapboxMap().isStyleLoaded()) {
-                        return;
-                    }
-                    buttons.disable_trace = true;
-                    map._container.style.cursor = 'crosshair';
-                    if (buttons.mapboxgl_canvas) buttons.mapboxgl_canvas.style.cursor = 'crosshair';
-                    if (buttons.street_view_button.mapillary) {
-                        buttons.mapillary_coverage.addTo(map);
-                        buttons.mapillary_coverageZoomed.addTo(map);
-                    }
-                    buttons.street_view_button.style.color = '#247827';
-                    buttons.street_view_button.open = true;
-                }
-            });
-            this.mapillary_move.addEventListener('mousedown', function (e) {
-                buttons.mapillary_move.startX = e.clientX;
-                buttons.mapillary_move.startY = e.clientY;
-                buttons.mapillary_move.startTop = buttons.mapillary_container.offsetTop;
-                buttons.mapillary_move.startLeft = buttons.mapillary_container.offsetLeft;
-                buttons.mapillary_move.dragging = true;
-            });
-            document.addEventListener('mousemove', function (e) {
-                if (buttons.mapillary_move.dragging) {
-                    e.preventDefault();
-                    buttons.mapillary_container.style.top = (buttons.mapillary_move.startTop + e.clientY - buttons.mapillary_move.startY) + "px";
-                    buttons.mapillary_container.style.left = (buttons.mapillary_move.startLeft + e.clientX - buttons.mapillary_move.startX) + "px";
-                }
-            });
-            document.addEventListener('mouseup', function (e) {
-                buttons.mapillary_move.dragging = false;
-            });
-            this.mapillary_close.addEventListener('click', closeStreetView);
             map.addEventListener('click', function (e) {
-                if (buttons.street_view_button.open) {
-                    openStreetView(e);
-                    return;
-                }
                 if (window.getComputedStyle(buttons.load).display != 'none') {
                     buttons.toolbar_content.classList.remove('maximized');
                 }
