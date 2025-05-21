@@ -1,9 +1,4 @@
-# 🧭 The code of the new website is tracked at [gpxstudio/gpx.studio](https://github.com/gpxstudio/gpx.studio) 🧭
-
-![logo of gpx.studio](res/logo.png)
-[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/F1F1303GH)
-
-This repository contains the source code of the website [**gpx.studio**](https://gpx.studio), an online tool for GPX editing.
+This is my fork of the original gpx.studio site which was deprecated in 2024.
 
 ## Run the code
 
