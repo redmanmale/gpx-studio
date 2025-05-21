@@ -896,9 +896,11 @@ ul {
 
 #help-text {
     text-align: justify;
-    width: 80vw;
+    max-width: 50vw;
+    max-height: 35vw;
     line-height: 1.2;
     white-space: normal;
+    margin-right: 0.5vw;
 }
 
 #export-content table {
