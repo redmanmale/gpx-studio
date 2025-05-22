@@ -159,31 +159,6 @@ const layers = {
         maxNativeZoom: 18,
         maxZoom: MAX_ZOOM,
         attribution: '&copy; <a href="https://www.waymarkedtrails.org" target="_blank">Waymarked Trails</a>'
-    }),
-    stravaHeatmapAll: L.tileLayer('', {
-        maxNativeZoom: 14,
-        maxZoom: MAX_ZOOM,
-        attribution: '&copy; <a href="https://www.strava.com" target="_blank">Strava</a>'
-    }),
-    stravaHeatmapRide: L.tileLayer('', {
-        maxNativeZoom: 14,
-        maxZoom: MAX_ZOOM,
-        attribution: '&copy; <a href="https://www.strava.com" target="_blank">Strava</a>'
-    }),
-    stravaHeatmapRun: L.tileLayer('', {
-        maxNativeZoom: 14,
-        maxZoom: MAX_ZOOM,
-        attribution: '&copy; <a href="https://www.strava.com" target="_blank">Strava</a>'
-    }),
-    stravaHeatmapWater: L.tileLayer('', {
-        maxNativeZoom: 14,
-        maxZoom: MAX_ZOOM,
-        attribution: '&copy; <a href="https://www.strava.com" target="_blank">Strava</a>'
-    }),
-    stravaHeatmapWinter: L.tileLayer('', {
-        maxNativeZoom: 14,
-        maxZoom: MAX_ZOOM,
-        attribution: '&copy; <a href="https://www.strava.com" target="_blank">Strava</a>'
     })
 };
 
