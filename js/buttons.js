@@ -587,7 +587,7 @@ export default class Buttons {
                         }).addTo(_this.map);
 
                         _this.mapboxMap.getMapboxMap().addControl(new MapboxLanguage({
-                            defaultLanguage: getLanguage() == 'zh' ? 'zh-Hans' : getLanguage()
+                            defaultLanguage: 'en'
                         }));
 
                         _this.mapbox_logo = _this.mapboxMap._container.querySelector('.mapboxgl-ctrl');
