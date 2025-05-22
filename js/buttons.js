@@ -359,11 +359,6 @@ export default class Buttons {
             position: 'bottomleft'
         }).addTo(this.map);
 
-        L.control.toggleableAttribution({
-            position: 'bottomleft',
-            icon: '<i class="fas fa-circle-info"></i>',
-        }).addTo(this.map);
-
         this.hideTraceButtons();
 
         this.addHandlers();
