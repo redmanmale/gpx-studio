@@ -1,11 +1,10 @@
-This is my fork of the original gpx.studio site which was deprecated in 2024.
+This is my fork of the [original gpx.studio](https://github.com/gpxstudio/gpxstudio.github.io) which was deprecated in 2024.
 
 ## Run the code
 
 To play with the code locally:
-1. Get your own API token at [Mapbox](https://www.mapbox.com/) and put it in `res/config.json`
-1. Launch a local server in the root directory, for example using `python3 -m http.server`
-1. *(Optional)* To test the software with a routing server:
+1. Launch a local server in the root directory, for example using `http-server -p 8000`
+1. *(Optional)* To test the software with your own routing server:
     - download [BRouter](https://github.com/abrensch/brouter) and follow the instructions [here](https://github.com/abrensch/brouter#brouter-on-windowslinuxmac-os) on how to launch a local instance
     - change the URL of the routing server in `res/config.json`
 
@@ -25,20 +24,6 @@ To play with the code locally:
 * Drag and drop to load and export files
 * Support as many traces as you want with scrollable tabs
 * Support for custom map layers
-* Google Drive integration and [add-on](https://gsuite.google.com/marketplace/app/gpxstudio_the_online_gpx_editor/666808960580): select a file, save the new version and get a shareable link as well as code to embed the map
-
-Read the [User Guide](https://gpx.studio/about.html#guide) for more details.
-
-## Contributing
-
-If you think something is missing from the website, please create an issue to discuss it or make a pull request if you can implement it yourself.
-
-## Translation
-
-The website is translated by volunteers on a collaborative translation platform.
-You can help complete and improve the translations by joining the [Crowdin project](https://crowdin.com/project/gpxstudio).
-If you would like to start the translation in a new language, contact me or create an issue.
-Apart from a good understanding of **gpx.studio**, some basic knowledge of HTML can be useful. Any help is greatly appreciated!
 
 ## Acknowledgements
 
