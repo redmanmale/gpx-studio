@@ -87,10 +87,6 @@ export default class Total {
         this.buttons.focusTabElement(this.tab);
         this.buttons.hideTraceButtons();
         this.buttons.unhideToHide();
-
-        for (var i=0; i<this.traces.length; i++) if (this.traces[i].visible) {
-            this.traces[i].showWaypoints();
-        }
     }
 
     unfocus() {
