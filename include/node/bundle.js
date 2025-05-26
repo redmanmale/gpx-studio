@@ -189,7 +189,7 @@ PNG.prototype.getRGBA8Array = function(){
 
 module.exports = PNG;
 
-},{}],"/include/png/PNGReader.js":[function(require,module,exports){
+},{}],"include/png/PNGReader.js":[function(require,module,exports){
 (function (Buffer){(function (){
 /*global Uint8Array:true ArrayBuffer:true */
 "use strict";
@@ -619,7 +619,7 @@ PNGReader.prototype.parse = function(options, callback){
 module.exports = PNGReader;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"./PNG":1,"buffer":12,"zlib":11}],"/include/tilebelt/index.js":[function(require,module,exports){
+},{"./PNG":1,"buffer":12,"zlib":11}],"include/tilebelt/index.js":[function(require,module,exports){
 'use strict';
 
 var d2r = Math.PI / 180,

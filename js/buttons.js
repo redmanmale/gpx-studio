@@ -18,8 +18,8 @@ export default class Buttons {
         this.custom_layers_object = [];
 
         this.terrain_cache = new Map();
-        this.tilebelt = require('/include/tilebelt/index.js');
-        this.PNGReader = require('/include/png/PNGReader.js');
+        this.tilebelt = require('include/tilebelt/index.js');
+        this.PNGReader = require('include/png/PNGReader.js');
 
         // EMBEDDING
         const queryString = window.location.search;
@@ -675,7 +675,7 @@ export default class Buttons {
                 _this.openLocalStorage();
             }
         }
-        xhr.open('GET', '/res/config.json');
+        xhr.open('GET', 'res/config.json');
         xhr.send();
     }
 

@@ -530,7 +530,7 @@ export default class Trace {
         const size = this.buttons.isMobile() ? 14 : 9;
         const marker = L.marker([point.lat, point.lng], {
             icon: L.icon({
-                iconUrl: '/res/circle.svg',
+                iconUrl: 'res/circle.svg',
                 iconSize: [size, size]
             }),
             draggable: true

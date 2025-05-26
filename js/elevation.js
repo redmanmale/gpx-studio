@@ -167,7 +167,7 @@ L.Control.Heightgraph.include({
                 });
                 this._startCircle.addTo(this._map);
                 this._startCircle.bringToFront();
-                this._endCircle = L.imageOverlay('/res/end.png', [pt2, pt2], {zIndex:1200});
+                this._endCircle = L.imageOverlay('res/end.png', [pt2, pt2], {zIndex:1200});
                 this._endCircle.addTo(this._map);
                 this._endCircle.getElement().style.border = '2px solid white';
                 this._endCircle.getElement().classList.add('dontselect','end-circle');

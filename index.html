@@ -11,19 +11,19 @@
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://gpx.studio/" />
         <meta property="og:image" content="https://gpx.studio/res/og_logo.png" />
-        <link rel="icon" href="/res/favicon.png">
-        <link rel="stylesheet" href="/include/fontawesome/css/fontawesome.min.css"/>
-        <link rel="stylesheet" href="/include/fontawesome/css/brands.min.css"/>
-        <link rel="stylesheet" href="/include/fontawesome/css/solid.min.css"/>
+        <link rel="icon" href="res/favicon.png">
+        <link rel="stylesheet" href="include/fontawesome/css/fontawesome.min.css"/>
+        <link rel="stylesheet" href="include/fontawesome/css/brands.min.css"/>
+        <link rel="stylesheet" href="include/fontawesome/css/solid.min.css"/>
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
         <link href='https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css' rel='stylesheet' />
-        <link rel="stylesheet" href="/include/elevation/L.Control.Heightgraph.css"/>
-        <link rel="stylesheet" href="/include/controlwindow/L.Control.Window.css">
+        <link rel="stylesheet" href="include/elevation/L.Control.Heightgraph.css"/>
+        <link rel="stylesheet" href="include/controlwindow/L.Control.Window.css">
         <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder@2.3.0/dist/Control.Geocoder.css" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.79.0/dist/L.Control.Locate.min.css">
         <link rel="stylesheet" href="https://unpkg.com/leaflet-toggleable-attribution@0.0.1/src/L.Control.ToggleableAttribution.css"/>
         <link rel="stylesheet" href="https://unpkg.com/mapillary-js@4.0.0/dist/mapillary.css" />
-        <link rel="stylesheet" type="text/css" href="/res/index.css">
+        <link rel="stylesheet" type="text/css" href="res/index.css">
     </head>
     <body>
         <input id="input-file" type="file" accept=".gpx" multiple style="display: none"/>
@@ -424,7 +424,7 @@
             <div id="load-error-ok" class="panels custom-button normal-button">Ok</div>
         </div>
         <div id="embed-content" class="panels-container custom-button" style="padding: 4px 10px; margin-left: 10px; border-radius: 16px; font-size: 14px; color: #3a3a38;">
-            <b>Open in</b> <img src="/res/logo.png" height="20" style="vertical-align: bottom;" alt="logo of gpx.studio, the online GPX file editor">
+            <b>Open in</b> <img src="res/logo.png" height="20" style="vertical-align: bottom;" alt="logo of gpx.studio, the online GPX file editor">
         </div>
         <div id="unit-kilometers-text">km</div>
         <div id="unit-miles-text">mi</div>
@@ -568,33 +568,33 @@
         </div>
     </body>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="/include/overpasslayer/OverPassLayer.bundle.js"></script>
-    <script type="text/javascript" src="/include/icon/Leaflet.Icon.Glyph.js"></script>
-    <script type="text/javascript" src="/js/data.js"></script>
-    <script type="module" src="/include/gpx/gpx.js"></script>
+    <script src="include/overpasslayer/OverPassLayer.bundle.js"></script>
+    <script type="text/javascript" src="include/icon/Leaflet.Icon.Glyph.js"></script>
+    <script type="text/javascript" src="js/data.js"></script>
+    <script type="module" src="include/gpx/gpx.js"></script>
     <script src='https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.js'></script>
     <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-language/v1.0.0/mapbox-gl-language.js'></script>
-    <script type="text/javascript" src="/include/elevation/L.Control.Heightgraph.js"></script>
-    <script type="text/javascript" src="/js/elevation.js"></script>
-    <script type="text/javascript" src="/include/textpath/leaflet.textpath.js"></script>
-    <script type="text/javascript" src="/include/mapboxgl/leaflet-mapbox-gl.js"></script>
-    <script type="text/javascript" src="/include/controlwindow/L.Control.Window.js"></script>
-    <script type="text/javascript" src="/include/geometryutil/leaflet.geometryutil.js"></script>
-    <script type="text/javascript" src="/include/distancemarkers/leaflet-distance-markers.js"></script>
+    <script type="text/javascript" src="include/elevation/L.Control.Heightgraph.js"></script>
+    <script type="text/javascript" src="js/elevation.js"></script>
+    <script type="text/javascript" src="include/textpath/leaflet.textpath.js"></script>
+    <script type="text/javascript" src="include/mapboxgl/leaflet-mapbox-gl.js"></script>
+    <script type="text/javascript" src="include/controlwindow/L.Control.Window.js"></script>
+    <script type="text/javascript" src="include/geometryutil/leaflet.geometryutil.js"></script>
+    <script type="text/javascript" src="include/distancemarkers/leaflet-distance-markers.js"></script>
     <script src="https://unpkg.com/leaflet-toggleable-attribution@0.0.1/src/L.Control.ToggleableAttribution.js"></script>
     <script src="https://unpkg.com/leaflet-control-geocoder@2.3.0/dist/Control.Geocoder.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.79.0/dist/L.Control.Locate.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     <script src="https://unpkg.com/mapillary-js@4.0.0/dist/mapillary.js"></script>
     <script src="https://unpkg.com/leaflet.vectorgrid@1.3.0/dist/Leaflet.VectorGrid.min.js"></script>
-    <script src="/include/sanitize/xss.min.js"></script>
-    <script type="module" src="/include/simplify/simplify.js"></script>
-    <script src="/js/layers.js"></script>
-    <script type="module" src="/include/node/bundle.js"></script>
-    <script type="module" src="/js/slider.js"></script>
-    <script type="module" src="/js/layercontrol.js"></script>
-    <script type="module" src="/js/buttons.js"></script>
-    <script type="module" src="/js/trace.js"></script>
-    <script type="module" src="/js/total.js"></script>
-    <script type="module" src="/js/script.js"></script>
+    <script src="include/sanitize/xss.min.js"></script>
+    <script type="module" src="include/simplify/simplify.js"></script>
+    <script src="js/layers.js"></script>
+    <script type="module" src="include/node/bundle.js"></script>
+    <script type="module" src="js/slider.js"></script>
+    <script type="module" src="js/layercontrol.js"></script>
+    <script type="module" src="js/buttons.js"></script>
+    <script type="module" src="js/trace.js"></script>
+    <script type="module" src="js/total.js"></script>
+    <script type="module" src="js/script.js"></script>
 </html>
