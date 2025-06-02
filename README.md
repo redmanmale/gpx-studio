@@ -25,6 +25,18 @@ To play with the code locally:
 * Support as many traces as you want with scrollable tabs
 * Support for custom map layers
 
+## Difference from original
+
+* removed localization, English only
+* removed Google Drive integration
+* disabled Mapbox provider which required API key
+* removed user's geolocation request and street view based on it
+* removed donation requests
+* disabled elevation profile by default
+* removed leaflet attribution
+* removed project attribution in exported GPX files
+* using [BRouter.de](https://brouter.de/) public API with vanilla types for routing
+
 ## Acknowledgements
 
 This project would not have been possible without the following amazing projects:
