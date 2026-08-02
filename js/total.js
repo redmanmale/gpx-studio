@@ -117,27 +117,17 @@ export default class Total {
     }
 
     showData() {
-        this.buttons.distance.innerHTML = (this.getDistance() / 1000).toFixed(2).toString() + ' ' + (this.buttons.km ? this.buttons.unit_kilometers_text : this.buttons.unit_miles_text);
-        this.buttons.elevation.innerHTML = '<i class="fas fa-angle-up"></i> ' + this.getElevationGain().toFixed(0).toString() + (this.buttons.km ? this.buttons.unit_meters_text : this.buttons.unit_feet_text) +
-            ' <i class="fas fa-angle-down"></i> ' + this.getElevationLoss().toFixed(0).toString() + (this.buttons.km ? this.buttons.unit_meters_text : this.buttons.unit_feet_text);
-        if (this.buttons.speed_units) this.buttons.speed.innerHTML = this.getMovingSpeed().toFixed(1).toString() + ' ' + (this.buttons.km ? this.buttons.unit_kilometers_text : this.buttons.unit_miles_text) + '/' + this.buttons.unit_hours_text;
-        else this.buttons.speed.innerHTML = this.msToTimeMin(this.getMovingPace()) + ' ' + this.buttons.unit_minutes_text + '/' + (this.buttons.km ? this.buttons.unit_kilometers_text : this.buttons.unit_miles_text);
-        this.buttons.duration.innerHTML = this.msToTime(this.getMovingTime());
-        this.buttons.points.innerHTML = this.getPoints();
-        this.buttons.segments.innerHTML = this.getSegments();
-        this.buttons.tracks.innerHTML = this.getTracks();
+        this.buttons.distance.innerHTML = '';
+        this.buttons.elevation.innerHTML = '';
+        this.buttons.speed.innerHTML = '';
+        this.buttons.duration.innerHTML = '';
+        this.buttons.points.innerHTML = '';
+        this.buttons.segments.innerHTML = '';
+        this.buttons.tracks.innerHTML = '';
     }
 
     showElevation() {
         this.buttons.elev.clear();
-        this.buttons.elev.options.imperial = !this.buttons.km;
-        var points = [];
-        for (var i=0; i<this.traces.length; i++) {
-            const segments = this.traces[i].getSegments();
-            for (var j=0; j<segments.length; j++) points.push(segments[j]._latlngs);
-        }
-        this.buttons.elev.addData(points);
-        this.buttons.elev._removeSliderCircles();
         this.buttons.setElevationProfileWidth();
     }
 
