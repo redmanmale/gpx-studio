@@ -1303,11 +1303,26 @@ export default class Buttons {
         };
         document.addEventListener("keydown", function (e) {
             if (e.key === "Escape") {
-                if (buttons.window_open) buttons.window_open.hide();
+                e.preventDefault();
+                if (buttons.window_open && buttons.window_open._wrapper.classList.contains('visible')) {
+                    buttons.window_open.hide();
+                    return;
+                }
                 if (total.hasFocus) return;
                 var trace = total.traces[total.focusOn];
-                if (trace.isEdited) buttons.edit.click();
-                e.preventDefault();
+                if (!trace) return;
+                if (buttons.add_wpt.active) {
+                    map._container.style.cursor = '';
+                    if (buttons.mapboxgl_canvas) buttons.mapboxgl_canvas.style.cursor = '';
+                    buttons.disable_trace = false;
+                    buttons.add_wpt.active = false;
+                    return;
+                }
+                if (trace.isEdited) {
+                    buttons.edit.click();
+                    return;
+                }
+                total.updateFocus();
             } else if (e.key === "F1") {
                 if (localStorage.hasOwnProperty('beforelastbasemap')) {
                     const basemapName = localStorage.getItem('beforelastbasemap');
@@ -1801,7 +1816,17 @@ export default class Buttons {
                         if (buttons.disable_trace) return;
                         if (buttons.lastUpdatePointTime && Date.now() - buttons.lastUpdatePointTime < 100) return;
                         trace.addEndPoint(e.latlng.lat, e.latlng.lng);
+                        return;
+                    } else if (trace.isEdited) {
+                        return;
                     }
+
+                    if ((buttons.window_open && buttons.window_open._wrapper.classList.contains('visible')) || total.to_merge || buttons.zone_delete.rect) return;
+
+                    const target = e.originalEvent && e.originalEvent.target;
+                    if (target && target.closest && target.closest('.leaflet-interactive, .leaflet-marker-icon, .leaflet-popup-pane, .leaflet-control')) return;
+
+                    total.updateFocus();
                 }
             });
             map.on('baselayerchange', function (e) {

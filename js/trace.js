@@ -83,6 +83,8 @@ export default class Trace {
                 else if (!trace.hasFocus) {
                     trace.focus();
                     if (total.buttons.window_open == total.buttons.structure_window && total.buttons.structure_window._wrapper.classList.contains('visible')) total.buttons.structure.click();
+                } else {
+                    trace.updateFocus();
                 }
             });
             li.addEventListener('dblclick', function (e) {
