@@ -723,6 +723,7 @@ export default class Buttons {
         this.reduce.classList.add('unselected', 'no-click');
         this.structure.classList.add('unselected', 'no-click');
         this.hide.classList.add('unselected', 'no-click');
+        this.export.classList.add('unselected', 'no-click2');
     }
 
     showTraceButtons() {
@@ -739,6 +740,7 @@ export default class Buttons {
         this.reduce.classList.remove('unselected', 'no-click');
         this.structure.classList.remove('unselected', 'no-click');
         this.hide.classList.remove('unselected', 'no-click');
+        this.export.classList.remove('unselected', 'no-click2');
         if (this.total.traces.length > 1) this.combine.classList.remove('unselected', 'no-click');
     }
 
@@ -1092,62 +1094,64 @@ export default class Buttons {
             buttons.zone_delete_window.hide();
         });
         this.export.addEventListener("click", function () {
-            if (total.traces.length > 0) {
-                if (total.traces.length == 1) {
-                    buttons.merge.checked = false;
-                    buttons.merge.disabled = true;
-                } else {
-                    buttons.merge.disabled = false;
-                }
-                if (total.getMovingTime() == 0) {
-                    buttons.include_time.checked = false;
-                    buttons.include_time.disabled = true;
-                } else {
-                    buttons.include_time.checked = true;
-                    buttons.include_time.disabled = false;
-                }
-                const additionalData = total.getAverageAdditionalData();
-                if (!additionalData.hr) {
-                    buttons.include_hr.checked = false;
-                    buttons.include_hr.disabled = true;
-                } else {
-                    buttons.include_hr.checked = true;
-                    buttons.include_hr.disabled = false;
-                }
-                if (!additionalData.cad) {
-                    buttons.include_cad.checked = false;
-                    buttons.include_cad.disabled = true;
-                } else {
-                    buttons.include_cad.checked = true;
-                    buttons.include_cad.disabled = false;
-                }
-                if (!additionalData.power) {
-                    buttons.include_power.checked = false;
-                    buttons.include_power.disabled = true;
-                } else {
-                    buttons.include_power.checked = true;
-                    buttons.include_power.disabled = false;
-                }
-                if (!additionalData.atemp) {
-                    buttons.include_atemp.checked = false;
-                    buttons.include_atemp.disabled = true;
-                } else {
-                    buttons.include_atemp.checked = true;
-                    buttons.include_atemp.disabled = false;
-                }
-                if (!additionalData.surface) {
-                    buttons.include_surface.checked = false;
-                    buttons.include_surface.disabled = true;
-                } else {
-                    buttons.include_surface.checked = true;
-                    buttons.include_surface.disabled = false;
-                }
-                if (buttons.window_open) buttons.window_open.hide();
-                buttons.window_open = buttons.export_window;
-                buttons.export_window.show();
+            if (total.hasFocus || total.focusOn < 0 || !total.traces[total.focusOn]) return;
+
+            const trace = total.traces[total.focusOn];
+            buttons.merge.checked = false;
+            buttons.merge.disabled = true;
+            if (trace.getMovingTime() == 0) {
+                buttons.include_time.checked = false;
+                buttons.include_time.disabled = true;
+            } else {
+                buttons.include_time.checked = true;
+                buttons.include_time.disabled = false;
             }
+            const additionalData = trace.getAverageAdditionalData();
+            if (!additionalData.hr) {
+                buttons.include_hr.checked = false;
+                buttons.include_hr.disabled = true;
+            } else {
+                buttons.include_hr.checked = true;
+                buttons.include_hr.disabled = false;
+            }
+            if (!additionalData.cad) {
+                buttons.include_cad.checked = false;
+                buttons.include_cad.disabled = true;
+            } else {
+                buttons.include_cad.checked = true;
+                buttons.include_cad.disabled = false;
+            }
+            if (!additionalData.power) {
+                buttons.include_power.checked = false;
+                buttons.include_power.disabled = true;
+            } else {
+                buttons.include_power.checked = true;
+                buttons.include_power.disabled = false;
+            }
+            if (!additionalData.atemp) {
+                buttons.include_atemp.checked = false;
+                buttons.include_atemp.disabled = true;
+            } else {
+                buttons.include_atemp.checked = true;
+                buttons.include_atemp.disabled = false;
+            }
+            if (!additionalData.surface) {
+                buttons.include_surface.checked = false;
+                buttons.include_surface.disabled = true;
+            } else {
+                buttons.include_surface.checked = true;
+                buttons.include_surface.disabled = false;
+            }
+            if (buttons.window_open) buttons.window_open.hide();
+            buttons.window_open = buttons.export_window;
+            buttons.export_window.show();
         });
         this.export2.addEventListener("click", async function () {
+            if (total.hasFocus || total.focusOn < 0 || !total.traces[total.focusOn]) {
+                buttons.export_window.hide();
+                return;
+            }
+
             const mergeAll = buttons.merge.checked;
             const time = buttons.include_time.checked;
             const hr = buttons.include_hr.checked;
@@ -1156,7 +1160,7 @@ export default class Buttons {
             const power = buttons.include_power.checked;
             const surface = buttons.include_surface.checked;
 
-            const output = total.outputGPX(mergeAll, time, hr, atemp, cad, power, surface);
+            const output = total.outputGPX(mergeAll, time, hr, atemp, cad, power, surface, total.focusOn);
             for (var i = 0; i < output.length; i++) {
                 if (i > 0) await buttons.pause(200);
                 buttons.download(output[i].name, output[i].text);
