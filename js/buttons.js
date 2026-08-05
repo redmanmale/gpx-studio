@@ -1,5 +1,6 @@
 import Total from './total.js';
 import Slider from './slider.js';
+import MobileSheet from './mobile-sheet.js';
 
 export default class Buttons {
     constructor() {
@@ -673,6 +674,9 @@ export default class Buttons {
                 _this.setElevationProfileWidth();
                 _this.openURLs();
                 _this.openLocalStorage();
+                if (!_this.embedding) {
+                    _this.mobileSheet = new MobileSheet(_this);
+                }
             }
         }
         xhr.open('GET', 'res/config.json');
@@ -724,6 +728,7 @@ export default class Buttons {
         this.structure.classList.add('unselected', 'no-click');
         this.hide.classList.add('unselected', 'no-click');
         this.export.classList.add('unselected', 'no-click2');
+        if (this.mobileSheet) this.mobileSheet.syncPrimaryButtons();
     }
 
     showTraceButtons() {
@@ -742,6 +747,7 @@ export default class Buttons {
         this.hide.classList.remove('unselected', 'no-click');
         this.export.classList.remove('unselected', 'no-click2');
         if (this.total.traces.length > 1) this.combine.classList.remove('unselected', 'no-click');
+        if (this.mobileSheet) this.mobileSheet.syncPrimaryButtons();
     }
 
     greyTraceButtons() {
@@ -849,6 +855,12 @@ export default class Buttons {
         var info_height = this.trace_info_grid.offsetHeight;
         var elevation_profile_width = Math.min(map_width - info_width, map_width * 4 / 5);
         var elevation_profile_height = Math.min(info_height, this.embedding ? 120 : 160);
+
+        if (this.mobileSheet && this.mobileSheet.active) {
+            const sheetWidth = this.trace_info_content.clientWidth || (window.innerWidth - 20);
+            elevation_profile_width = Math.max(180, sheetWidth - 8);
+            elevation_profile_height = this.mobileSheet.moreToolsOpen() ? 140 : 100;
+        }
 
         if (elevation_profile_width != this.elev._width || elevation_profile_height != this.elev._height) {
             this.elev.resize({ width: elevation_profile_width, height: elevation_profile_height });
@@ -989,6 +1001,7 @@ export default class Buttons {
             if (buttons.window_open) buttons.window_open.hide();
             const newTrace = total.addTrace(undefined, "new.gpx");
             newTrace.draw();
+            if (buttons.mobileSheet) buttons.mobileSheet.updateEditChrome();
         });
         this.add_wpt.addEventListener("click", function () {
             if (total.hasFocus) return;
@@ -1266,6 +1279,7 @@ export default class Buttons {
             } else {
                 trace.draw();
             }
+            if (buttons.mobileSheet) buttons.mobileSheet.updateEditChrome();
         });
         this.toggle_editing_options.addEventListener('click', function () {
             buttons.editing_options.hidden = !buttons.editing_options.hidden;
@@ -1814,6 +1828,8 @@ export default class Buttons {
                         return;
                     } else if (trace.drawing) {
                         if (buttons.disable_trace) return;
+                        // On mobile, points are added via the crosshair Add button
+                        if (buttons.mobileSheet && buttons.mobileSheet.active) return;
                         if (buttons.lastUpdatePointTime && Date.now() - buttons.lastUpdatePointTime < 100) return;
                         trace.addEndPoint(e.latlng.lat, e.latlng.lng);
                         return;

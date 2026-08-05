@@ -87,6 +87,7 @@ export default class Total {
         this.buttons.focusTabElement(this.tab);
         this.buttons.hideTraceButtons();
         this.buttons.unhideToHide();
+        if (this.buttons.mobileSheet) this.buttons.mobileSheet.syncPrimaryButtons();
     }
 
     unfocus() {
@@ -96,6 +97,7 @@ export default class Total {
         for (var i=0; i<this.traces.length; i++) {
             this.traces[i].hideWaypoints();
         }
+        if (this.buttons.mobileSheet) this.buttons.mobileSheet.syncPrimaryButtons();
     }
 
     updateFocus() {

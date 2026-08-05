@@ -146,6 +146,7 @@ export default class Trace {
             }
         }).on('mouseover', function (e) {
             if (trace.buttons.disable_trace) return;
+            if (trace.buttons.isMobile()) return;
             if (trace.isEdited) {
                 if (e.originalEvent.which == 3) return;
                 if (e.layer._latlng) return;
@@ -282,6 +283,7 @@ export default class Trace {
             this.showDistanceMarkers();
         } else this.buttons.hideToUnhide();
         if (!this.buttons.embedding) this.tab.scrollIntoView();
+        if (this.buttons.mobileSheet) this.buttons.mobileSheet.syncPrimaryButtons();
     }
 
     unfocus() {
@@ -295,6 +297,7 @@ export default class Trace {
         if (this.drawing) this.stopDraw();
         if (this.renaming) this.rename();
         if (this.buttons.slider.isActive()) this.buttons.slider.reset();
+        if (this.buttons.mobileSheet) this.buttons.mobileSheet.syncPrimaryButtons();
     }
 
     setStyle(focus) {
@@ -354,6 +357,7 @@ export default class Trace {
         else this.buttons.undo.classList.add('unselected', 'no-click2');
         if (this.at < this.memory.length - 1) this.buttons.redo.classList.remove('unselected', 'no-click2');
         else this.buttons.redo.classList.add('unselected', 'no-click2');
+        if (this.buttons.mobileSheet) this.buttons.mobileSheet.syncPrimaryButtons();
     }
 
     updateExtract() {
@@ -408,6 +412,7 @@ export default class Trace {
         this.buttons.redo.addEventListener('click', this.redoListener = this.redo.bind(this));
         this.updateUndoRedo();
         this.buttons.showOrHideEditingOptions();
+        if (this.buttons.mobileSheet) this.buttons.mobileSheet.updateEditChrome();
     }
 
     stopEdit() {
@@ -427,13 +432,16 @@ export default class Trace {
 
         this.memory = [];
         this.at = -1;
+        if (this.buttons.mobileSheet) this.buttons.mobileSheet.updateEditChrome();
     }
 
     draw() {
         this.edit();
         this.drawing = true;
-        this.buttons.map._container.style.cursor = 'crosshair';
-        if (this.buttons.mapboxgl_canvas) this.buttons.mapboxgl_canvas.style.cursor = 'crosshair';
+        if (!(this.buttons.mobileSheet && this.buttons.mobileSheet.active)) {
+            this.buttons.map._container.style.cursor = 'crosshair';
+            if (this.buttons.mapboxgl_canvas) this.buttons.mapboxgl_canvas.style.cursor = 'crosshair';
+        }
     }
 
     stopDraw() {
@@ -529,7 +537,7 @@ export default class Trace {
     newEditMarker(point, layer) {
         const trace = this;
         const map = this.map;
-        const size = this.buttons.isMobile() ? 14 : 9;
+        const size = this.buttons.isMobile() ? 28 : 9;
         const marker = L.marker([point.lat, point.lng], {
             icon: L.icon({
                 iconUrl: 'res/circle.svg',

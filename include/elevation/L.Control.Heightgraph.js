@@ -5349,7 +5349,7 @@
       _appendBackground: function _appendBackground() {
         var background = this._background = select(this._container).select("svg").select("g").append("rect").attr("width", this._svgWidth).attr("height", this._svgHeight).style("fill", "none").style("stroke", "none").style("pointer-events", "all").on("mousemove.focusbox", this._mousemoveHandler.bind(this)).on("mouseout.focusbox", this._mouseoutHandler.bind(this));
 
-        if (L.Browser.android) {
+        if (L.Browser.touch) {
           background.on("touchstart.drag", this._dragHandler.bind(this)).on("touchstart.drag", this._dragStartHandler.bind(this)).on("touchstart.focusbox", this._mousemoveHandler.bind(this));
           L.DomEvent.on(this._container, 'touchend', this._dragEndHandler, this);
         } else {

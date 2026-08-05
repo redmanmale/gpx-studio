@@ -1032,3 +1032,478 @@ ul {
 .requesting .spinner {
     -webkit-animation: rotating 2s linear infinite;
 }
+
+/* —— Mobile bottom sheet (portrait MVP) —— */
+
+#mobile-sheet[hidden],
+#mobile-crosshair[hidden] {
+    display: none !important;
+}
+
+.mobile-sheet {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2500;
+    display: flex;
+    flex-direction: column;
+    background: #fcfcfc;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.18);
+    border-radius: 12px 12px 0 0;
+    max-height: 90vh;
+    height: auto;
+    touch-action: none;
+}
+
+.mobile-sheet.mobile-sheet-anim {
+    transition: height 0.2s ease-out;
+}
+
+.mobile-sheet-handle-area {
+    flex: 0 0 auto;
+    padding: 10px 0 6px;
+    cursor: grab;
+    touch-action: none;
+}
+
+.mobile-sheet-handle-area[hidden] {
+    display: none !important;
+}
+
+.mobile-sheet:not(.mobile-sheet-expandable) .mobile-sheet-handle-area {
+    display: none;
+}
+
+.mobile-sheet-handle {
+    width: 40px;
+    height: 4px;
+    border-radius: 2px;
+    background: #c4c4c4;
+    margin: 0 auto;
+}
+
+.mobile-sheet-scroll {
+    flex: 0 1 auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 8px 10px 10px;
+    touch-action: pan-y;
+}
+
+.mobile-toolbar {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.mobile-tools-row {
+    display: flex;
+    flex-wrap: nowrap;
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+}
+
+#mobile-burger {
+    flex: 0 0 44px;
+    width: 44px;
+    border-left: 1px solid #e5e5e5;
+    z-index: 1;
+    background: #fcfcfc;
+}
+
+/* Single card menu: overflow actions + secondary tools in one grid */
+.mobile-menu {
+    margin-bottom: 8px;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 4px;
+}
+
+.mobile-menu[hidden] {
+    display: none !important;
+}
+
+.mobile-menu-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    justify-items: center;
+    align-items: center;
+}
+
+#mobile-overflow-primary,
+#mobile-sheet-slot-buttons,
+body.mobile-ui #mobile-sheet-slot-buttons #buttons {
+    display: contents;
+}
+
+#mobile-overflow-primary[hidden] {
+    display: none !important;
+}
+
+.mobile-btn.panels-button {
+    box-sizing: border-box;
+    width: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    height: 44px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    color: #535353;
+    font-size: 16px;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    flex: 0 0 44px;
+}
+
+.mobile-btn.panels-button:disabled,
+.mobile-btn.panels-button.unselected {
+    color: #b3b3b3;
+    cursor: default;
+}
+
+.mobile-btn.panels-button:not(:disabled):active {
+    color: #000;
+}
+
+.mobile-btn.panels-button.open {
+    color: #000;
+    background: #ececec;
+}
+
+body.mobile-ui #mobile-sheet-slot-buttons .panels-button,
+body.mobile-ui .mobile-menu-grid .panels-button {
+    width: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* Edit already lives on the main toolbar — hide duplicate in the menu */
+body.mobile-ui #buttons #edit {
+    display: none !important;
+}
+
+/* Unified top map controls: search, layers, zoom +/− */
+body.mobile-ui {
+    --map-ctrl-size: 44px;
+    --map-ctrl-gap: 6px;
+    --map-ctrl-inset: 10px;
+}
+
+body.mobile-ui .leaflet-top.leaflet-left,
+body.mobile-ui .leaflet-top.leaflet-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: auto;
+    box-sizing: border-box;
+}
+
+body.mobile-ui .leaflet-top.leaflet-left {
+    max-width: calc(100% - 70px);
+    padding: var(--map-ctrl-inset) 0 0 var(--map-ctrl-inset);
+    gap: var(--map-ctrl-gap);
+}
+
+body.mobile-ui .leaflet-top.leaflet-right {
+    padding: var(--map-ctrl-inset) var(--map-ctrl-inset) 0 0;
+}
+
+body.mobile-ui .leaflet-top.leaflet-left .leaflet-control,
+body.mobile-ui .leaflet-top.leaflet-right .leaflet-control {
+    margin: 0 !important;
+    float: none !important;
+    clear: none !important;
+}
+
+/* Collapsed search/layers wrappers = exactly one button tall (no extra gap) */
+body.mobile-ui .leaflet-top.leaflet-left > .leaflet-control-geocoder:not(.leaflet-control-geocoder-expanded),
+body.mobile-ui .leaflet-top.leaflet-left > .leaflet-control-layers:not(.leaflet-control-layers-expanded) {
+    width: var(--map-ctrl-size) !important;
+    height: var(--map-ctrl-size) !important;
+    min-height: var(--map-ctrl-size) !important;
+    max-height: var(--map-ctrl-size) !important;
+    padding: 0 !important;
+    overflow: visible;
+    line-height: 0;
+}
+
+/* Strip default chrome so every hit-target looks the same */
+body.mobile-ui .leaflet-top.leaflet-right .leaflet-bar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--map-ctrl-gap);
+    background: transparent;
+    box-shadow: none;
+    border: none;
+}
+
+body.mobile-ui .leaflet-top .leaflet-control-geocoder,
+body.mobile-ui .leaflet-top .leaflet-control-layers {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+body.mobile-ui .leaflet-top .leaflet-bar a,
+body.mobile-ui .leaflet-top .leaflet-control-geocoder-icon,
+body.mobile-ui .leaflet-top .leaflet-control-layers-toggle {
+    box-sizing: border-box !important;
+    width: var(--map-ctrl-size) !important;
+    height: var(--map-ctrl-size) !important;
+    min-width: var(--map-ctrl-size) !important;
+    min-height: var(--map-ctrl-size) !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: none !important;
+    border-radius: 4px !important;
+    background-color: #fff !important;
+    background-image: none !important;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65) !important;
+    color: #535353 !important;
+    font-size: 18px !important;
+    line-height: 1 !important;
+    text-decoration: none !important;
+}
+
+body.mobile-ui .leaflet-top.leaflet-right .leaflet-bar a + a {
+    border-top: none !important;
+    margin-top: 0 !important;
+}
+
+body.mobile-ui .leaflet-control-locate a {
+    width: var(--map-ctrl-size) !important;
+    height: var(--map-ctrl-size) !important;
+    line-height: var(--map-ctrl-size) !important;
+    font-size: 18px !important;
+}
+
+/* Keep layers toggle visible when expanded so a second tap can close it */
+body.mobile-ui .leaflet-control-layers-expanded {
+    padding-top: var(--map-ctrl-size);
+    position: relative;
+    background: #fff !important;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65) !important;
+    border-radius: 4px;
+    max-height: none !important;
+    height: auto !important;
+    width: auto !important;
+    overflow: visible !important;
+}
+
+body.mobile-ui .leaflet-control-layers-expanded .leaflet-control-layers-toggle {
+    display: flex !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    box-shadow: none !important;
+    border-radius: 4px 4px 0 0 !important;
+}
+
+body.mobile-ui #mobile-sheet-slot-options #editing-options {
+    margin: 0 0 8px;
+    border-radius: 8px;
+    pointer-events: all;
+}
+
+body.mobile-ui #mobile-sheet-slot-options #toggle-editing-options {
+    display: none !important;
+}
+
+body.mobile-ui #mobile-sheet #info {
+    width: 100%;
+    max-width: 100%;
+}
+
+body.mobile-ui #mobile-sheet #info-grid,
+body.mobile-ui #mobile-sheet #info-grid.trace-info {
+    width: 100% !important;
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px 10px;
+    justify-items: stretch;
+}
+
+body.mobile-ui #mobile-sheet .heightgraph {
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+    width: 100% !important;
+    max-width: 100%;
+}
+
+body.mobile-ui #mobile-sheet #slide-container {
+    grid-column: 1 / -1;
+    display: block !important;
+    position: relative;
+    height: 36px;
+    margin-top: 4px;
+    width: 100%;
+}
+
+body.mobile-ui #mobile-sheet #crop-container {
+    grid-column: 1 / -1;
+    display: flex !important;
+    justify-content: flex-end;
+}
+
+body.mobile-ui #mobile-sheet .slider {
+    height: 28px;
+    margin: 0;
+}
+
+body.mobile-ui #mobile-sheet .slider::-webkit-slider-thumb {
+    width: 28px;
+    height: 28px;
+}
+
+body.mobile-ui #mobile-sheet .slider::-moz-range-thumb {
+    width: 28px;
+    height: 28px;
+}
+
+body.mobile-ui #mobile-sheet .tab {
+    font-size: 14px;
+    padding: 8px 12px;
+    min-height: 36px;
+    box-sizing: border-box;
+}
+
+body.mobile-ui #mobile-sheet #distance,
+body.mobile-ui #mobile-sheet #distance-val,
+body.mobile-ui #mobile-sheet #elevation,
+body.mobile-ui #mobile-sheet #elevation-val,
+body.mobile-ui #mobile-sheet #speed,
+body.mobile-ui #mobile-sheet #speed-val,
+body.mobile-ui #mobile-sheet #duration,
+body.mobile-ui #mobile-sheet #duration-val {
+    grid-column: auto !important;
+    grid-row: auto !important;
+    display: block !important;
+}
+
+body.mobile-ui #mobile-sheet #points,
+body.mobile-ui #mobile-sheet #points-val,
+body.mobile-ui #mobile-sheet #segments,
+body.mobile-ui #mobile-sheet #segments-val,
+body.mobile-ui #mobile-sheet #tracks,
+body.mobile-ui #mobile-sheet #tracks-val,
+body.mobile-ui #mobile-sheet #units-text,
+body.mobile-ui #mobile-sheet #units-input,
+body.mobile-ui #mobile-sheet #speed-units-text,
+body.mobile-ui #mobile-sheet #speed-units-input,
+body.mobile-ui #mobile-sheet #elevation-input {
+    display: none !important;
+}
+
+body.mobile-ui .popup-action {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    font-size: 15px;
+}
+
+body.mobile-ui .leaflet-popup-content {
+    margin: 8px 10px;
+}
+
+.mobile-sheet-dialog {
+    padding: 8px 0 16px;
+    border-top: 1px solid #e5e5e5;
+    margin-top: 8px;
+}
+
+.mobile-help-touch {
+    padding: 8px 0 16px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #444;
+}
+
+.mobile-help-touch ul {
+    padding-left: 1.2em;
+    margin: 8px 0 12px;
+}
+
+#mobile-crosshair {
+    position: fixed;
+    width: 44px;
+    height: 44px;
+    margin-left: -22px;
+    margin-top: -22px;
+    z-index: 2400;
+    pointer-events: none;
+}
+
+.mobile-crosshair-h,
+.mobile-crosshair-v {
+    position: absolute;
+    background: rgba(220, 15, 130, 0.85);
+    left: 50%;
+    top: 50%;
+}
+
+.mobile-crosshair-h {
+    width: 28px;
+    height: 2px;
+    margin-left: -14px;
+    margin-top: -1px;
+}
+
+.mobile-crosshair-v {
+    width: 2px;
+    height: 28px;
+    margin-left: -1px;
+    margin-top: -14px;
+}
+
+body.mobile-ui #mapid {
+    height: calc(100% - var(--mobile-sheet-h, 22vh));
+}
+
+body.mobile-ui .leaflet-bottom.leaflet-left {
+    bottom: 0 !important;
+}
+
+body.mobile-ui #help-text {
+    max-width: 100%;
+}
+
+/* Keep desktop media-query toolbar collapse from blanking tools when not in sheet mode */
+@media screen and (max-width: 800px) {
+    body:not(.mobile-ui) #toolbar div {
+        display: inline-block;
+    }
+    body:not(.mobile-ui) #burger {
+        display: none;
+    }
+}
